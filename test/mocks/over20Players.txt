@@ -1,0 +1,13 @@
+23/04/2019 15:34:22 - New match 1234 has started
+23/04/2019 15:35:00 - Player1 killed Player2 using M16
+23/04/2019 15:35:01 - Player3 killed Player4 using AK47
+23/04/2019 15:35:02 - Player5 killed Player6 using M4
+23/04/2019 15:35:03 - Player7 killed Player8 using AK47
+23/04/2019 15:35:04 - Player9 killed Player10 using M16
+23/04/2019 15:35:05 - Player11 killed Player12 using M4
+23/04/2019 15:35:06 - Player13 killed Player14 using AK47
+23/04/2019 15:35:07 - Player15 killed Player16 using M16
+23/04/2019 15:35:08 - Player17 killed Player18 using M4
+23/04/2019 15:35:09 - Player19 killed Player20 using AK47
+23/04/2019 15:35:10 - Player21 killed Player1 using M4
+23/04/2019 15:40:00 - Match 1234 has ended

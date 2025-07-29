@@ -1,0 +1,22 @@
+23/04/2019 15:34:22 - New match 11348965 has started
+23/04/2019 15:34:25 - Roman killed Nick using M16
+23/04/2019 15:34:26 - Nick killed Roman using AK47
+23/04/2019 15:34:28 - <WORLD> killed Nick by DROWN
+23/04/2019 15:34:30 - Roman killed John using AK47
+23/04/2019 15:35:10 - Match 11348965 has ended
+
+23/04/2019 16:00:00 - New match 11348966 has started
+23/04/2019 16:00:05 - Alice killed Bob using Shotgun
+23/04/2019 16:00:07 - Bob killed Alice using Pistol
+23/04/2019 16:00:10 - <WORLD> killed Charlie by FALL
+23/04/2019 16:00:20 - Alice killed Bob using Shotgun
+23/04/2019 16:01:00 - Match 11348966 has ended
+
+23/04/2019 16:30:00 - New match 11348967 has started
+23/04/2019 16:30:10 - Player1 killed Player2 using SMG
+23/04/2019 16:30:15 - Player3 killed Player1 using Sniper
+23/04/2019 16:30:20 - <WORLD> killed Player4 by TRAP
+23/04/2019 16:30:22 - Player2 killed Player3 using Shotgun
+23/04/2019 16:30:25 - Player1 killed Player3 using SMG
+23/04/2019 16:30:30 - Player1 killed Player2 using SMG
+23/04/2019 16:30:50 - Match 11348967 has ended
