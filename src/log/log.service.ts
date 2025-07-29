@@ -140,10 +140,27 @@ export class LogService {
     });
   }
 
-  private extractDate(line: string): Date {
+  public extractDate(line: string): Date {
     const dateStr = line.substring(0, 19);
     const [date, time] = dateStr.split(' ');
     const [day, month, year] = date.split('/');
-    return new Date(`${year}-${month}-${day}T${time}`);
+    const [hours, minutes, seconds] = time.split(':').map(Number);
+
+    const utcTimestamp = Date.UTC(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      hours,
+      minutes,
+      seconds,
+    );
+
+    const dateObj = new Date(utcTimestamp);
+
+    if (isNaN(dateObj.getTime())) {
+      throw new BadRequestException(`Data inválida no log: "${dateStr}"`);
+    }
+
+    return dateObj;
   }
 }
