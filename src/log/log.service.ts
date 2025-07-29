@@ -106,20 +106,12 @@ export class LogService {
       where: { matchId: match.id },
     });
 
-    console.log('kills')
-    console.log(kills)
-    console.log('kills')
-
     const fragCount: Record<string, number> = {};
     for (const kill of kills) {
       fragCount[kill.killer] = (fragCount[kill.killer] || 0) + 1;
     }
 
     const winner = Object.entries(fragCount).sort((a, b) => b[1] - a[1])[0]?.[0];
-
-    console.log('winner')
-    console.log(winner)
-    console.log('winner')
 
     if (!winner) return;
 
@@ -131,9 +123,6 @@ export class LogService {
 
     const winnerFavoriteWeapon = Object.entries(weaponCount).sort((a, b) => b[1] - a[1])[0]?.[0];
 
-    console.log('favoriteWeapon')
-    console.log(winnerFavoriteWeapon)
-    console.log('favoriteWeapon')
     await this.matchRepository.update(match.id, {
       winner,
       winnerFavoriteWeapon
