@@ -7,13 +7,19 @@ export class Match {
   id: number;
 
   @Column({ unique: true })
-  externalId: string; 
+  externalId: string;
 
   @Column()
   startedAt: Date;
 
   @Column({ nullable: true })
   endedAt?: Date;
+
+  @Column({ nullable: true })
+  winnerFavoriteWeapon?: string;
+
+  @Column({ nullable: true })
+  winner?: string;
 
   @OneToMany(() => Kill, kill => kill.match, { cascade: true })
   kills: Kill[];
