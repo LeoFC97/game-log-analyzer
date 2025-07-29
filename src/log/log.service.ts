@@ -57,9 +57,6 @@ export class LogService {
         const [, killer, victim] = killMatch;
         if (killer !== '<WORLD>') playerSet.add(killer);
         if (victim !== '<WORLD>') playerSet.add(victim);
-      } else if (worldKillMatch) {
-        const [, victim] = worldKillMatch;
-        if (victim !== '<WORLD>') playerSet.add(victim);
       }
     }
 
@@ -71,19 +68,6 @@ export class LogService {
 
     let match = await this.matchRepository.findOne({ where: { externalId: matchId } });
 
-    if (match?.endedAt) {
-      throw new UnprocessableEntityException(`A partida ${matchId} já foi finalizada e não pode ser processada novamente.`);
-    }
-
-    if (!match) {
-      match = this.matchRepository.create({
-        externalId: matchId,
-        startedAt,
-        kills: [],
-      });
-      await this.matchRepository.save(match);
-    }
-
     if (!match) {
       match = this.matchRepository.create({
         externalId: matchId,
@@ -91,13 +75,14 @@ export class LogService {
         endedAt,
         kills: [],
       });
+      console.log('criando match....')
       await this.matchRepository.save(match);
     }
 
     for (const line of lines) {
-      const killMatch = line.match(/(.*?) killed (.*?) using (.*)/);
-      const worldKillMatch = line.match(/<WORLD> killed (.*?) by (.*)/);
       const timestamp = this.extractDate(line);
+      const lineWithoutTimestamp = line.substring(22); // remove "dd/MM/yyyy HH:mm:ss - "
+      const killMatch = lineWithoutTimestamp.match(/(.*?) killed (.*?) using (.*)/);
 
       if (killMatch) {
         const [, killer, victim, weapon] = killMatch;
@@ -107,15 +92,52 @@ export class LogService {
           victim,
           weapon,
           timestamp,
-          match,
+          matchId: match.id,
         });
-
+        console.log('salvando no banco a kill: ', kill)
         await this.killRepository.save(kill);
       }
     }
+    await this.calculateWinnerFavoriteWeapon(match);
+  }
 
-    match.endedAt = endedAt;
-    await this.matchRepository.save(match);
+  private async calculateWinnerFavoriteWeapon(match: Match): Promise<void> {
+    const kills = await this.killRepository.find({
+      where: { matchId: match.id },
+    });
+
+    console.log('kills')
+    console.log(kills)
+    console.log('kills')
+
+    const fragCount: Record<string, number> = {};
+    for (const kill of kills) {
+      fragCount[kill.killer] = (fragCount[kill.killer] || 0) + 1;
+    }
+
+    const winner = Object.entries(fragCount).sort((a, b) => b[1] - a[1])[0]?.[0];
+
+    console.log('winner')
+    console.log(winner)
+    console.log('winner')
+
+    if (!winner) return;
+
+    const winnerKills = kills.filter(k => k.killer === winner);
+    const weaponCount: Record<string, number> = {};
+    for (const kill of winnerKills) {
+      weaponCount[kill.weapon] = (weaponCount[kill.weapon] || 0) + 1;
+    }
+
+    const winnerFavoriteWeapon = Object.entries(weaponCount).sort((a, b) => b[1] - a[1])[0]?.[0];
+
+    console.log('favoriteWeapon')
+    console.log(winnerFavoriteWeapon)
+    console.log('favoriteWeapon')
+    await this.matchRepository.update(match.id, {
+      winner,
+      winnerFavoriteWeapon
+    });
   }
 
   private extractDate(line: string): Date {
