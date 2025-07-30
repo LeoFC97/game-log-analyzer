@@ -5,7 +5,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Configuração básica do Swagger
   const config = new DocumentBuilder()
     .setTitle('Game Log Analyzer API')
     .setDescription('API para upload e consulta de logs de partidas')
